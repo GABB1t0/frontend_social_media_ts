@@ -55,22 +55,20 @@ const TemplateLogin = () => {
                                 </div>
                         }
                         
-                        <div className="bg-white w-72 h-96 flex flex-col justify-center gap-4">
+                        <div className="bg-white w-72 h-72 flex flex-col justify-center gap-4 rounded shadow-md">
                             <p className="text-2xl font-bold text-center">Iniciar Sesion</p>
                             <form onSubmit={handleSubmit} className="flex flex-col justify-center w-4/5 mx-auto gap-4">
-                                <div className="flex flex-col">
-                                    <label htmlFor="email">Correo Electronico</label>
+                                <div className="flex flex-col gap-3">
+                                    
                                     <InputSession 
                                         name="email" 
                                         type="email" 
-                                        placeholder="Ingrese Correo" 
-                                        required={true} />
-                                    <label htmlFor="password">Contraseña</label>
+                                        required={true}>Correo</InputSession>
+                                    
                                     <InputSession 
                                         name="password" 
                                         type="password" 
-                                        placeholder="Ingrese Contraseña" 
-                                        required={true} />
+                                        required={true}>Contraseña</InputSession>
                                 </div>
                                 <button type="submit" className="bg-[#fc6232] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" >Iniciar Sesion</button>
                                 <p className="text-center">No tienes cuenta? <Link to={SUPPORTED_ROUTES.signUp()} className="text-[#fc6232]">Registrate</Link></p>

@@ -80,15 +80,16 @@ const TemplateSignUp = () => {
                     <p className="text-2xl font-bold text-center pt-2">Registrarse</p>
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center w-4/5 mx-auto gap-4">
                         <div className="flex flex-col gap-3">
-                            <InputSession name="name" type="text" placeholder="Ingrese Nombre" required={false} />
+                            <InputSession name="name" type="text"  required={false}>
+                            Nombre</InputSession>
                             { error.name && <span className="text-red-500 text-sm">{error.name}</span>}
-                            <InputSession name="lastname" type="text" placeholder="Ingrese Apellido" required={false} />
+                            <InputSession name="lastname" type="text" required={false}>Apellido</InputSession>
                             { error.lastname && <span className="text-red-500 text-sm">{error.lastname}</span>}
-                            <InputSession name="email" type="email" placeholder="Ingrese Correo" required={false} />
+                            <InputSession name="email" type="email" required={false}>Correo</InputSession>
                             { error.email && <span className="text-red-500 text-sm">{error.email}</span>}
-                            <InputSession name="password" type="password" placeholder="Ingrese Contraseña" required={false} />
+                            <InputSession name="password" type="password"  required={false}>Contraseña</InputSession>
                             { error.password && <span className="text-red-500 text-sm">{error.password}</span>}
-                            <InputSession name="password_confirmation" type="password" placeholder="Confirmar Contraseña" required={false} />
+                            <InputSession name="password_confirmation" type="password"  required={false}>Confirmar Contraseña</InputSession>
                             { (error.password && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
                         </div>
                         <button 
