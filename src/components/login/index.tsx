@@ -38,7 +38,7 @@ const TemplateLogin = () => {
                 setError([...error,errors]);
                 return;
             }
-            const {status, statusText} = error;
+            const { status, statusText } = err;
             actionsForErrors({status: status, statusText:statusText})
         });
     }
