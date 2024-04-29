@@ -1,13 +1,8 @@
-import { Link } from "react-router-dom"
-import { SUPPORTED_ROUTES } from "../config"
+
+import TemplateSignUp from "../components/signup"
 
 const SignUp = () => {
-  return (
-    <>
-      <Link to={`${SUPPORTED_ROUTES.login()}`}>ir al login</Link>
-      <div>SignUp</div>
-    </>
-  )
+  return <TemplateSignUp/>
 }
 
 export default SignUp
