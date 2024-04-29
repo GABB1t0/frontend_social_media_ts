@@ -54,15 +54,15 @@ const TemplateSignUp = () => {
             //Recuperamos los errores devueltos por la api
             const errors = err?.errors;
             //Creamos un nuevo objeto error con el estado inicial de errores
-            const newObjErrors = initialStateError;
+            const newObjErrors = {...initialStateError};
             
             //Modificamos las propiedades del nuevo objeto de error con los errores devueltos por la api
             for (const key in errors) {
                 if (Object.prototype.hasOwnProperty.call(errors, key)) {
-                    newObjErrors[key] = errors[key][0]; 
+                    const element = errors[key][0];
+                    newObjErrors[key] = element; 
                 }
             }
-
             //seteamos el nuevo objeto error.
             setError(newObjErrors);
             return;
@@ -81,15 +81,15 @@ const TemplateSignUp = () => {
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center w-4/5 mx-auto gap-4">
                         <div className="flex flex-col gap-3">
                             <InputSession name="name" type="text" placeholder="Ingrese Nombre" required={false} />
-                            { error.name && <span className="text-red-500 text-sm">{error.name}</span>}
+                            { error.name.length > 0 && <span className="text-red-500 text-sm">{error.name}</span>}
                             <InputSession name="lastname" type="text" placeholder="Ingrese Apellido" required={false} />
-                            { error.lastname && <span className="text-red-500 text-sm">{error.lastname}</span>}
+                            { error.lastname.length > 0 && <span className="text-red-500 text-sm">{error.lastname}</span>}
                             <InputSession name="email" type="email" placeholder="Ingrese Correo" required={false} />
-                            { error.email && <span className="text-red-500 text-sm">{error.email}</span>}
+                            { error.email.length > 0 && <span className="text-red-500 text-sm">{error.email}</span>}
                             <InputSession name="password" type="password" placeholder="Ingrese Contraseña" required={false} />
-                            { error.password && <span className="text-red-500 text-sm">{error.password}</span>}
+                            { error.password.length > 0 && <span className="text-red-500 text-sm">{error.password}</span>}
                             <InputSession name="password_confirmation" type="password" placeholder="Confirmar Contraseña" required={false} />
-                            { (error.password && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
+                            { (error.password.length > 0 && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
                         </div>
                         <button 
                             type="submit" 
