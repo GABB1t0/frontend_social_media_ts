@@ -12,7 +12,7 @@ const InputSession: React.FC<InputProps> = ({name, required, type, placeholder})
         required={required} 
         type={type} 
         placeholder={placeholder} 
-        className="border-2 rounded-sm  mb-3"  
+        className="border-2 rounded-sm"  
         />
     )
 }
