@@ -33,7 +33,7 @@ type ErrForActions = {
 }
 
 const TemplateSignUp = () => {
-  
+
   const { searchingToken } = useVerifySession();
   const apiClient = client();
   const [error, setError] = useState(initialStateError);
@@ -54,15 +54,15 @@ const TemplateSignUp = () => {
             //Recuperamos los errores devueltos por la api
             const errors = err?.errors;
             //Creamos un nuevo objeto error con el estado inicial de errores
-            const newObjErrors = initialStateError;
+            const newObjErrors = {...initialStateError};
             
             //Modificamos las propiedades del nuevo objeto de error con los errores devueltos por la api
             for (const key in errors) {
                 if (Object.prototype.hasOwnProperty.call(errors, key)) {
-                    newObjErrors[key] = errors[key][0]; 
+                    const element = errors[key][0];
+                    newObjErrors[key] = element; 
                 }
             }
-
             //seteamos el nuevo objeto error.
             setError(newObjErrors);
             return;
@@ -70,9 +70,9 @@ const TemplateSignUp = () => {
         const { status, statusText } = err as ErrForActions;
         actionsForErrors({status: status, statusText:statusText})
     }
-  }
+}
 
-  return (
+return (
     <>
         { searchingToken &&
             <div className="h-screen w-full flex justify-center bg-gray-100">
@@ -107,7 +107,7 @@ const TemplateSignUp = () => {
             </div>
         }
     </>
-  );
+);
 }
 
 export default TemplateSignUp;
