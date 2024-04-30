@@ -33,7 +33,7 @@ type ErrForActions = {
 }
 
 const TemplateSignUp = () => {
-
+  
   const { searchingToken } = useVerifySession();
   const apiClient = client();
   const [error, setError] = useState(initialStateError);
@@ -70,9 +70,9 @@ const TemplateSignUp = () => {
         const { status, statusText } = err as ErrForActions;
         actionsForErrors({status: status, statusText:statusText})
     }
-}
+  }
 
-return (
+  return (
     <>
         { searchingToken &&
             <div className="h-screen w-full flex justify-center bg-gray-100">
@@ -80,17 +80,16 @@ return (
                     <p className="text-2xl font-bold text-center pt-2">Registrarse</p>
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center w-4/5 mx-auto gap-4">
                         <div className="flex flex-col gap-3">
-                            <InputSession name="name" type="text"  required={false}>
-                            Nombre</InputSession>
-                            { error.name && <span className="text-red-500 text-sm">{error.name}</span>}
-                            <InputSession name="lastname" type="text" required={false}>Apellido</InputSession>
-                            { error.lastname && <span className="text-red-500 text-sm">{error.lastname}</span>}
-                            <InputSession name="email" type="email" required={false}>Correo</InputSession>
-                            { error.email && <span className="text-red-500 text-sm">{error.email}</span>}
-                            <InputSession name="password" type="password"  required={false}>Contraseña</InputSession>
-                            { error.password && <span className="text-red-500 text-sm">{error.password}</span>}
-                            <InputSession name="password_confirmation" type="password"  required={false}>Confirmar Contraseña</InputSession>
-                            { (error.password && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
+                            <InputSession name="name" type="text"  required={false}>Nombre</InputSession>
+                            { error.name.length > 0 && <span className="text-red-500 text-sm">{error.name}</span>}
+                            <InputSession name="lastname" type="text"  required={false} >Apellido</InputSession>
+                            { error.lastname.length > 0 && <span className="text-red-500 text-sm">{error.lastname}</span>}
+                            <InputSession name="email" type="email" required={false} >Correo</InputSession>
+                            { error.email.length > 0 && <span className="text-red-500 text-sm">{error.email}</span>}
+                            <InputSession name="password" type="password"  required={false} >Contraseña</InputSession>
+                            { error.password.length > 0 && <span className="text-red-500 text-sm">{error.password}</span>}
+                            <InputSession name="password_confirmation" type="password"  required={false} >Repetir contraseña</InputSession>
+                            { (error.password.length > 0 && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
                         </div>
                         <button 
                             type="submit" 
@@ -107,7 +106,7 @@ return (
             </div>
         }
     </>
-);
+  );
 }
 
 export default TemplateSignUp;
