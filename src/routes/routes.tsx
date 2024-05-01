@@ -35,7 +35,7 @@ export const routes = [
                     if(getCookie(nameCookieSessionApp) === undefined)
                         throw {statusText: "Unauthenticated",  status: 401 };
 
-                    return false;                   
+                    return true;                   
                 },
                 element: <Home/>,
             },
