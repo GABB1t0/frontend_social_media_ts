@@ -20,7 +20,7 @@ export const useActionForErrorsHook = () => {
                 alert(statusText);
             }else if(statusText === errorMessagesApi.errorVerificationEmail){
                 //Redireccionar
-                navigate('/profile')
+                navigate('/profile')//Modificar por ruta de verificacion de email
             }
         }
         
