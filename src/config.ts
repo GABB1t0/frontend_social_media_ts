@@ -7,6 +7,7 @@ export const ROUTES_API =  {
     findUser: (user:string):EndPointApi => `find/${user}/user`,
     imagesUser: (user:string):EndPointApi => `/user/view/${user}/images`,
     updateFieldUser: (user:string):EndPointApi => `/user/${user}/update`,
+    deleteUser: (user:string):EndPointApi => `/user/${user}/destroy`,
     searchPostsUser: (user:string,offset:number,page:number):EndPointApi => `/posts/${user}/${offset}?page=${page}`,
     createPost: ():EndPointApi => '/posts/store',
     updatePost: (post:string):EndPointApi => `/posts/${post}/update/`,
