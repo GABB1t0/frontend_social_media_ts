@@ -13,6 +13,7 @@ export type EndPointApi = '/user'
     | `find/${string}/user`
     | `/user/view/${string}/images`
     | `/user/${string}/update`
+    | `/user/${string}/destroy`
     | `/posts/${string}/${number}?page=${number}`
     | '/posts/store'
     | `/posts/${string}/update/`
