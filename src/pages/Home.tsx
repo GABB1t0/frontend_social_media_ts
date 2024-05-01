@@ -1,6 +1,8 @@
+import TemplateHome from "../components/home/TemplateHome"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <TemplateHome/>
   )
 }
 

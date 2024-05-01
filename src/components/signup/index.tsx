@@ -11,7 +11,8 @@ import { useState } from "react";
 import { useRouter } from "../../hooks/useRouter";
 import { Data } from "../../types/LoginApiResponse";
 import { useVerifySession } from "../../hooks/useVeriySession";
-import { actionsForErrors } from "../../utils/actionsForErrors";
+import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
+import { errorMessagesApi } from "../../utils/errorMessagesApi";
 
 type ErrorState = {
     name:string,
@@ -38,17 +39,18 @@ const TemplateSignUp = () => {
   const apiClient = client();
   const [error, setError] = useState(initialStateError);
   const { navigate } = useRouter();
+  const { executeActions } = useActionForErrorsHook();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     try {
-      const res = await apiClient.post(routesApi.signUp(), formData);
-      const  data  = res.data as Data;
-      const { token } = data;
-      setCookie(nameCookieSessionApp,token,1000);
-      navigate('/');
+        const res = await apiClient.post(routesApi.signUp(), formData);
+        const  data  = res.data as Data;
+        const { token } = data;
+        setCookie(nameCookieSessionApp,token,1000);
+        navigate('/');
     } catch (err) {
         if(err?.status === 422){
             //Recuperamos los errores devueltos por la api
@@ -68,7 +70,7 @@ const TemplateSignUp = () => {
             return;
         }
         const { status, statusText } = err as ErrForActions;
-        actionsForErrors({status: status, statusText:statusText})
+        executeActions({status: status, statusText:statusText})
     }
   }
 
@@ -88,8 +90,9 @@ const TemplateSignUp = () => {
                             { error.email.length > 0 && <span className="text-red-500 text-sm">{error.email}</span>}
                             <InputSession name="password" type="password"  required={false} >Contraseña</InputSession>
                             { error.password.length > 0 && <span className="text-red-500 text-sm">{error.password}</span>}
-                            <InputSession name="password_confirmation" type="password"  required={false} >Repetir contraseña</InputSession>
-                            { (error.password.length > 0 && error.password !== 'The password field is required.')  && <span className="text-red-500 text-sm">{error.password}</span>}
+                            <InputSession name="password_confirmation" type="password"  required={false}>Reescribir contraseña
+                            </InputSession>
+                            { (error.password.length > 0 && error.password !== errorMessagesApi.passwordRequired)  && <span className="text-red-500 text-sm">{error.password}</span>}
                         </div>
                         <button 
                             type="submit" 

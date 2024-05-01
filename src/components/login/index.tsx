@@ -11,14 +11,15 @@ import {
 import { Data } from "../../types/LoginApiResponse";
 import { useRouter } from "../../hooks/useRouter";
 import { useVerifySession } from "../../hooks/useVeriySession";
-import { actionsForErrors } from "../../utils/actionsForErrors";
+import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
 
 const TemplateLogin = () => {
 
     const { searchingToken } = useVerifySession();
     const [error, setError] = useState<string[]>([]);
     const apiClient = client();
-    const { navigate } = useRouter()
+    const { navigate } = useRouter();
+    const { executeActions } = useActionForErrorsHook();
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -39,7 +40,7 @@ const TemplateLogin = () => {
                 return;
             }
             const { status, statusText } = err;
-            actionsForErrors({status: status, statusText:statusText})
+            executeActions({status: status, statusText:statusText})
         });
     }
 
