@@ -36,7 +36,7 @@ const TemplateHome = () => {
     try{
     const resVerified = await clients.get(routesApi.userLogged())
     
-    dispatch(addUser(resVerified.data.user))
+    dispatch(addUser(resVerified.data))
 
     } catch(e){
       const {status, statusText} = e as ErrForActions
