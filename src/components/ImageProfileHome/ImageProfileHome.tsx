@@ -6,13 +6,14 @@ import { setModalPost, toggleModalProfile } from "../../app/slices/panelSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { ProfileImgModal } from "../modals/ProfileImgModal";
+import { RootState } from "../../app/store";
 
 
 export const ImageProfileHome = () => {
 
-  const stateUser = useSelector(state => state.user);
-  const stateProfileModal = useSelector(state => state.statePanel.stateProfileModal);
-  const {name, lastname} = stateUser.users;
+  const stateUser = useSelector((state:RootState) => state.userLogged);
+  const stateProfileModal = useSelector((state:RootState) => state.statePanel.stateProfileModal);
+  
 
   const dispatch = useDispatch();
 
@@ -52,7 +53,7 @@ export const ImageProfileHome = () => {
       <div className='mt-14'>
         
         <div className='px-5'>
-          <h1 className="font-bold text-base text-center">{name} {lastname}</h1>
+          <h1 className="font-bold text-base text-center">{stateUser?.entities?.name} {stateUser?.entities?.lastname}</h1>
           <p className="text-xs text-gray-500 text-justify">Hola mi nombre es Manuel Blanco, soy Ingeniero en informatica, 
             me gusta la programacion, el boxeo y el cafe.</p>
         </div>

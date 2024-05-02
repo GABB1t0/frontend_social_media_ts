@@ -6,7 +6,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark'
 import { useState } from 'react'
 import { DropdownMenu } from '../dropdownmenu/DropdownMenu'
 import { Link } from 'react-router-dom'
-/* import { Notification } from './notification/Notification' */
+import { Notification } from '../notification/Notification'
 import { SUPPORTED_ROUTES } from '../../config'
 
 type Props = {
@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({navBlock}) => {
 
   return (
     <>
-    <div className='fixed z-40 top-0 left-0 right-0'>
+    <div className='fixed z-50 top-0 left-0 right-0'>
       <header className="flex h-16 justify-center items-center bg-[#fcf2e8] shadow-sm ">
 
       <div className= {contentClass}>
@@ -47,7 +47,7 @@ const Header: React.FC<Props> = ({navBlock}) => {
 
             
           <li>
-            {/* <Notification/> */}
+            <Notification/>
           </li>
           <li className='lg:hidden' onClick={handleClik} >
             <IconButton color='inherit'>
