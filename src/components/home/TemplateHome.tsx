@@ -2,17 +2,14 @@ import { Suspense, lazy, useEffect } from "react";
 import { Feed } from "../Posts/Feed"
 import { ImageProfileHome } from "../ImageProfileHome/ImageProfileHome"
 import  InfoComponent  from "../infocomponent/InfoComponent"
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, /* useNavigate */ } from "react-router-dom";
 import { client } from "../../api/client";
 import { 
-  SUPPORTED_ROUTES,
-  nameCookieSessionApp, 
   ROUTES_API as routesApi
 } from '../../config';
 import useReduxHook from "../../hooks/useReduxHook";
 import { addUser } from "../../app/slices/userLoggedSlice";
 import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
-
 
 type ErrForActions = {
   status:number,
@@ -27,7 +24,7 @@ const TemplateHome = () => {
   console.log(dataUserLogged)
 
   const clients = client();
-  const navigate = useNavigate();
+ /*  const navigate = useNavigate(); */
   const {dispatch} = useReduxHook()
   const {executeActions} = useActionForErrorsHook()
   const controller = new AbortController();
@@ -35,7 +32,6 @@ const TemplateHome = () => {
   const getDataUser = async()=>{
     try{
     const resVerified = await clients.get(routesApi.userLogged())
-    
     dispatch(addUser(resVerified.data))
 
     } catch(e){
