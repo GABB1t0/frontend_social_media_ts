@@ -1,0 +1,39 @@
+.separator_container{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    height: 60px;
+    align-items: center;
+    width: 90%;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.separator_container p{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.separator_container a{
+    text-decoration: none;
+    color: #9c9c9c;
+}
+
+
+
+@media screen and (min-width : 540px){
+    .separator_container{
+        width: 70%;
+    }
+
+    
+}
+
+@media screen and (min-width: 820px) {
+    .separator_container{
+        width: 90%;
+        padding: 0  100px;
+    }
+    
+    
+}
