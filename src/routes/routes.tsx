@@ -13,6 +13,7 @@ const About  = lazy(() => import('../components/profile/About'));
 const Photos = lazy(() => import('../components/profile/Photos'));
 const EmailVerification = lazy(() => import('../pages/EmailVerification'));
 const Home = lazy(() => import('../pages/Home'));
+const SavePost = lazy(() => import('../pages/SavePosts'));
 
 const apiClient = client();
 export const routes = [
@@ -76,6 +77,10 @@ export const routes = [
                         element:<Photos />,
                     } 
                 ]
+            },
+            {
+                path:'/SavePost', 
+                element:<SavePost/>
             }
         ]
     }

@@ -13,6 +13,10 @@ import {
 } from '../../config'
 import { deleteCookie } from '../../utils/cookies'
 import { useRouter } from '../../hooks/useRouter'
+import { removeUser } from '../../app/slices/userLoggedSlice'
+import { useDispatch } from 'react-redux'
+
+
 
 export const DropdownMenu = () => {
   const [showDropdown, setShowDropdown] = useState(false)
@@ -21,6 +25,7 @@ export const DropdownMenu = () => {
   showDropdown ? menuClass = 'bg-white transition duration-150 ease-in-out flex w-52 shadow-lg flex-col gap-2 p-5 absolute top-16 right-2.5 before:absolute before:h-5 before:w-5 before:-top-1 before:right-1 before:bg-white before:rotate-45' : menuClass = 'hidden duration-500 -translate-y-6 ease-out'
   const clients = client()
   const { navigate } = useRouter()
+  const dispatch = useDispatch()
 
   const handleClick = () => {
     setShowDropdown(!showDropdown)
@@ -28,6 +33,7 @@ export const DropdownMenu = () => {
 
   //logout
   const handleLogout = async () => {
+    dispatch(removeUser())
     const res = await clients.post(routesApi.logout())
     deleteCookie(nameCookieSessionApp)
     setTimeout(() => {
@@ -59,7 +65,7 @@ export const DropdownMenu = () => {
               Activity
             </li>
             <li className='transition hover:text-[#fc6232] cursor-pointer lg:hidden' >
-              <Link to='/SavePosts'>
+              <Link to='/SavePost'>
                 
                   <BookmarkIcon/>
                   Guardadas

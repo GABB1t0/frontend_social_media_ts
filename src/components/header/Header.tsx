@@ -56,7 +56,7 @@ const Header: React.FC<Props> = ({navBlock}) => {
           </li>
           <li className='hidden lg:flex'>
             
-            <Link to='/SavePosts'>
+            <Link to='/SavePost'>
               <IconButton color='inherit'>
                   <BookmarkIcon/>
               </IconButton>
