@@ -8,9 +8,9 @@ import { getCookie } from "../utils/cookies";
 const Login = lazy(() => import('../pages/Login'))
 const SignUp = lazy(() => import('../pages/SignUp'))
 const Profile = lazy(() => import('../pages/Profile'));
-const Friends = lazy(() => import('../components/profile/Friends'));
-const About  = lazy(() => import('../components/profile/About'));
-const Photos = lazy(() => import('../components/profile/Photos'));
+const Friends = lazy(() => import('../components/profile/friends/Friends'));
+const About  = lazy(() => import('../components/profile/about/About'));
+const Photos = lazy(() => import('../components/profile/photos/Photos'));
 const EmailVerification = lazy(() => import('../pages/EmailVerification'));
 const Home = lazy(() => import('../pages/Home'));
 const SavePost = lazy(() => import('../pages/SavePosts'));
@@ -41,7 +41,7 @@ export const routes = [
                 element: <Home/>,
             },
             {
-                path:'/EmailVerification', 
+                path:'/emailVerification', 
                 element:<EmailVerification />
             },
             {
@@ -56,7 +56,7 @@ export const routes = [
                     .then(response => response.data)
                     .catch( error => error)
 
-                    if(data.status == 404 || data.status == 401 || data.status == 500){
+                    if(data.status == 403 || data.status == 404 || data.status == 401 || data.status == 500){
                         throw {statusText: data.statusText,  status: data.status };
                     }
 
