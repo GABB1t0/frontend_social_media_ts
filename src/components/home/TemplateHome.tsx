@@ -12,6 +12,8 @@ import {
 import useReduxHook from "../../hooks/useReduxHook";
 import { addUser } from "../../app/slices/userLoggedSlice";
 import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
+import { RootState } from "../../app/store";
+import { closeDropDownMenu } from "../../app/slices/panelSlice";
 
 
 type ErrForActions = {
@@ -28,8 +30,17 @@ const TemplateHome = () => {
 
   const clients = client();
   const navigate = useNavigate();
-  const {dispatch} = useReduxHook()
+  const {dispatch, myUseSelector} = useReduxHook()
   const {executeActions} = useActionForErrorsHook()
+  const panelState = myUseSelector((state:RootState) => state.statePanel);
+
+  const handleClick = (e:React.MouseEvent<HTMLElement>) => {
+      if(e.target && e.target.id !== 'dropdownmenu'){
+          if(panelState.stateDropdownMenu){
+              dispatch(closeDropDownMenu())
+          }
+      }
+  }
 
   const getDataUser = async()=>{
     try{
@@ -52,8 +63,8 @@ const TemplateHome = () => {
     <>
       <Suspense>
         
+          <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5' onClick={handleClick} >
         <Header navBlock={false} />
-          <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5'>
             <aside className="lg:w-[25%] sticky top-20 h-4/5 z-[49]">
               <div className="hidden md:flex flex-col gap-4 ">
                 

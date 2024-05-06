@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export type PanelState = {
   statePostModal: boolean,
-  stateProfileModal: boolean
+  stateProfileModal: boolean,
+  stateDropdownMenu: boolean
 }
 
 const initialState: PanelState = {
-    statePostModal: false
-    , stateProfileModal: false
+    statePostModal: false, 
+    stateProfileModal: false,
+    stateDropdownMenu: false
 }
 const panelSlice = createSlice({ 
     name: 'statePanel',
@@ -19,6 +21,12 @@ const panelSlice = createSlice({
       },
       toggleModalProfile: (state) => {
         state.stateProfileModal = !state.stateProfileModal;
+      },
+      openDropDownMenu: (state) => {
+        state.stateDropdownMenu = true
+      },
+      closeDropDownMenu: (state) => {
+        state.stateDropdownMenu = false
       }
         
 
@@ -28,4 +36,4 @@ const panelSlice = createSlice({
 
 
 export default panelSlice.reducer;
-export const { setModalPost, toggleModalProfile } = panelSlice.actions;
+export const { setModalPost, toggleModalProfile, openDropDownMenu, closeDropDownMenu } = panelSlice.actions;
