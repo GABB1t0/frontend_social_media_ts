@@ -1,6 +1,5 @@
 import { Outlet, useLoaderData } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
-import Loader from '../loaders/LoaderForRedirections';
 import useReduxHook from '../../hooks/useReduxHook';
 import { ROUTES_API } from '../../config';
 import { client } from '../../api/client';
@@ -12,6 +11,7 @@ import { addUser } from '../../app/slices/userLoggedSlice';
 import { RootState } from '../../app/store';
 import { useActionForErrorsHook } from '../../hooks/useActionForErrorsHook';
 import { UserSchema } from '../../types/SearchUserLoggedApiResponse'
+import { closeDropDownMenu } from '../../app/slices/panelSlice';
 
 const Header = lazy(() => import('../header/Header'));
 const TimeLine = lazy( () => import('./timeline'));
@@ -25,6 +25,16 @@ const TemplateProfile = () => {
 
     const userLogged = myUseSelector((state:RootState) => state?.userLogged);
     const userProfile = myUseSelector((state:RootState) => state?.userProfile);
+    const panelState = myUseSelector((state:RootState) => state.statePanel);
+
+    const handleClick = (e:React.MouseEvent<HTMLElement>) => {
+
+        if(e.target && e.target.id !== 'dropdownmenu'){
+            if(panelState.stateDropdownMenu){
+                dispatch(closeDropDownMenu())
+            }
+        }
+    }
     
     const setDataUserProfile = (data: typeof UserSchema) => {
         dispatch(addUserProfile(data));
@@ -61,35 +71,43 @@ const TemplateProfile = () => {
         }
     },[]);
 
+    useEffect(() => {
+        setDataUserProfile(dataLoader as typeof UserSchema);
+    },[dataLoader])
+
     return (
-        <>
-            {
-                <div className='bg-gray-200' id='infiniteScroll' style={{overflow:'auto', height:'100vh'}}>
-                    <Header navBlock={false}/>
-                    <Suspense fallback={<div><Loader/></div>}>
-                        {
-                        <div>
-                            {
-                                (userProfile.entities && userLogged.entities ) &&
-                                <>
-                                    <ProfileBanner />
-                                    {
-                                    location.pathname.includes('about') ||
-                                    location.pathname.includes('photos') ||
-                                    location.pathname.includes('friends')
-                                        ?   
-                                        <Outlet/>
-                                        :
-                                        <TimeLine/> 
-                                    }
-                                </> 
-                            }
-                        </div>      
-                        }
-                    </Suspense>
-                </div> 
-            }
-        </>
+      <>
+        {
+          <div 
+            className='bg-gray-200 overflow-auto h-screen' 
+            id='infiniteScroll'
+            onClick={handleClick} 
+            >
+              <Header navBlock={false}/>
+              <Suspense>
+                {
+                  <div>
+                    {
+                      (userProfile?.user && userLogged.entities ) &&
+                      <>
+                        <ProfileBanner />
+                          {
+                            location.pathname.includes('about') ||
+                            location.pathname.includes('photos') ||
+                            location.pathname.includes('friends')
+                             ?   
+                               <Outlet/>
+                             :
+                               <TimeLine/> 
+                          }
+                      </> 
+                    }
+                  </div>      
+                }
+              </Suspense>
+          </div> 
+        }
+      </>
     );
 }
 

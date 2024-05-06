@@ -17,18 +17,22 @@ import { removeUser } from '../../app/slices/userLoggedSlice'
 import { useDispatch } from 'react-redux'
 
 
+import useReduxHook from '../../hooks/useReduxHook'
+import { openDropDownMenu } from '../../app/slices/panelSlice'
+import { RootState } from '../../app/store'
 
 export const DropdownMenu = () => {
-  const [showDropdown, setShowDropdown] = useState(false)
+  const { dispatch, myUseSelector } = useReduxHook();
+  const panelState = myUseSelector((state:RootState) => state.statePanel);
   let menuClass = 'hidden'
 
-  showDropdown ? menuClass = 'bg-white transition duration-150 ease-in-out flex w-52 shadow-lg flex-col gap-2 p-5 absolute top-16 right-2.5 before:absolute before:h-5 before:w-5 before:-top-1 before:right-1 before:bg-white before:rotate-45' : menuClass = 'hidden duration-500 -translate-y-6 ease-out'
+  panelState.stateDropdownMenu ? menuClass = 'bg-white transition duration-150 ease-in-out flex w-52 shadow-lg flex-col gap-2 p-5 absolute top-16 right-2.5 before:absolute before:h-5 before:w-5 before:-top-1 before:right-1 before:bg-white before:rotate-45' : menuClass = 'hidden duration-500 -translate-y-6 ease-out'
   const clients = client()
   const { navigate } = useRouter()
-  const dispatch = useDispatch()
+ 
 
   const handleClick = () => {
-    setShowDropdown(!showDropdown)
+    dispatch(openDropDownMenu());
   }
 
   //logout
@@ -44,13 +48,16 @@ export const DropdownMenu = () => {
   return (
     <aside className='flex items-center justify-center'>
       <div >
-        <div className='size-12 rounded-full bg-gray-300 flex justify-center items-center ' onClick={handleClick}>
+        <div 
+          className='size-12 rounded-full bg-gray-300 flex justify-center items-center'
+          onClick={handleClick}
+        >
           <IconButton color='inherit' >
             <PersonIcon/>
           </IconButton>
         </div>
 
-        <div className = {menuClass}>
+        <div className = {menuClass} id="dropdownmenu">
           <h3 className='text-center' >Gabriel Antuarez</h3>
           <hr />
           <ul className='flex flex-col gap-4 my-3'>
