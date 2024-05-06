@@ -3,9 +3,19 @@ import {
   ROUTES_API as routesApi
 } from '../../config';
 import { client } from "../../api/client";
+import userLoggedSlice from "../../app/slices/userLoggedSlice";
+import useReduxHook from "../../hooks/useReduxHook";
+import { RootState } from "../../app/store";
+
+
 
 const TemplateEmailVerification: React.FC = () => {
   const clients = client();
+  const {myUseSelector} = useReduxHook();
+
+  const userLogged = myUseSelector((state:RootState) => state?.userLogged.entities);
+  
+  
 
   const handleClick = async() => {
     console.log('click');
@@ -23,7 +33,7 @@ const TemplateEmailVerification: React.FC = () => {
           <h1 className="font-bold text-xl border-b-2 border-orange-400 pb-3">Email Verification</h1>
         </div>
         <div className="pt-3">
-          <p className="opacity-50">Revisa tu correo electronico <b>correo@gmail.com</b> para verificar tu cuenta .</p>
+          <p className="opacity-50">Revisa tu correo electronico <b>{userLogged?.email}</b> para verificar tu cuenta .</p>
           <p className="opacity-50">Si no has recibido un correo de verificacion, ingresa en tu carpeta de span o <a  onClick={handleClick} className="font-bold hover:cursor-pointer hover:text-gray-400">Reenviar correo</a>.</p>
           <br />
           <p className="opacity-50">Gracias por usar nuestro servicio.</p>

@@ -1,4 +1,4 @@
-import TemplateHome from "../components/home/TemplateHome"
+import TemplateHome from "../components/home/index"
 
 const Home = () => {
   return (

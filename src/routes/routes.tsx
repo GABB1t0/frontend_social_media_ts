@@ -42,7 +42,14 @@ export const routes = [
             },
             {
                 path:'/emailVerification', 
-                element:<EmailVerification />
+                element:<EmailVerification />,
+                loader: async () => {
+                    if(getCookie(nameCookieSessionApp) === undefined)
+                        throw {statusText: "Unauthenticated",  status: 401 };
+
+                    return true;
+                }
+                
             },
             {
                 path:'/profile/:id/',
