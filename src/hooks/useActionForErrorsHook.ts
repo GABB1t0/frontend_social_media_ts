@@ -32,7 +32,7 @@ export const useActionForErrorsHook = () => {
             const tkn = getCookie(nameCookieSessionApp);
             if(tkn !== undefined) deleteCookie(nameCookieSessionApp);
             alert('Tu sesion ha expirado');
-            window.location.href = '/login';
+            return window.location.href = '/login';
         }
         
         if(status == 500){
