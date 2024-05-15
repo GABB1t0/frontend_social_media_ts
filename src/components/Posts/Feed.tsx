@@ -8,7 +8,7 @@ import useReduxHook from "../../hooks/useReduxHook";
 import { RootState } from "../../app/store";
 import { Data, Datum, Posts } from "../../types/SearchPostProfileApiResponse";
 import { EndPointApi } from "../../types";
-import MyFacebookLoader from "../loaders/MyFacebookLoader";
+import MyFacebookLoader from "../loaders/posts/MyFacebookLoader";
 
 
 
@@ -27,7 +27,7 @@ type ErrForActions = {
 export const Feed = ()=>{
 
   const [posts, setPosts] = useState<Datum[]>([])
-  const [page, setPage] = useState<Data>([])
+  const [page, setPage] = useState<Data>()
   const [hasMore, setHasMore] = useState(true);
   const clients = client()
   const { myUseSelector } = useReduxHook();
@@ -63,7 +63,7 @@ export const Feed = ()=>{
       const response = await request
       paginationData(response.data)
       console.log(response)
-      console.log(hasMore)
+      console.log(posts)
       
     } catch (err) {
       const {status, statusText} = err as ErrForActions;
@@ -111,7 +111,7 @@ export const Feed = ()=>{
           <div className='flex justify-end border-2 p-2'>
               <div className="w-full md:w-[100%] overflow-y-auto gap-2">
                   <MyFacebookLoader />
-                  <MyFacebookLoader />
+                  
                   
               </div>
           </div>
@@ -125,8 +125,11 @@ export const Feed = ()=>{
           }
         >
           {
+            
             posts.map((item) => (
+              
                 <Post key={item.id} data={item}/>
+                
             ))
           }
 

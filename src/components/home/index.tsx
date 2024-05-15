@@ -3,7 +3,7 @@ import { Feed } from "../Posts/Feed"
 import { ImageProfileHome } from "../ImageProfileHome/ImageProfileHome"
 import { useDispatchUser } from "../../hooks/useDispatchUser";
 import { RecommendedPeople } from "../infocomponent/RecommendedPeople";
-import Loader from "../loaders/LoaderForRedirections";
+import Loader from "../loaders/redirections/LoaderForRedirections";
 
   
 
