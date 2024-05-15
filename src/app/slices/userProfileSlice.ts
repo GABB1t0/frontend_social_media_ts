@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserSchema } from '../../types/SearchUserLoggedApiResponse'
 import { statusRequestApiTypes } from '../../types';
+import { ImageSchema } from '../../types/ImagesResponseApi';
  
 export type UserProfileState = {
-    entities?: typeof UserSchema,
+    user?: typeof UserSchema,
+    photos?: typeof ImageSchema [],
     loading: statusRequestApiTypes,
     error?:string
 }
 
 const initialState: UserProfileState = {
-    entities : undefined,
+    user:undefined,
+    photos:undefined,
     loading:'idle',
     error:undefined
 }
@@ -20,10 +23,15 @@ const userProfileSlice = createSlice({
     reducers: {
         addUser: (state, action ) => {
             state.loading = 'succeeded'
-            state.entities = action.payload
+            state.user = action.payload
+        },
+        addPhotos: (state, action ) => {
+            state.loading = 'succeeded'
+            state.photos = action.payload
         },
         removeUser:(state) => {
-            state.entities = undefined
+            state.user = undefined
+            state.photos = undefined
             state.loading = 'idle'
         }
     }
@@ -31,4 +39,4 @@ const userProfileSlice = createSlice({
 })    
 
 export default userProfileSlice.reducer;
-export const { addUser, removeUser } = userProfileSlice.actions;
+export const { addUser, addPhotos, removeUser } = userProfileSlice.actions;

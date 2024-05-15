@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData } from 'react-router-dom';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useRef } from 'react';
 import useReduxHook from '../../hooks/useReduxHook';
 import { ROUTES_API } from '../../config';
 import { client } from '../../api/client';
@@ -13,7 +13,7 @@ import { useActionForErrorsHook } from '../../hooks/useActionForErrorsHook';
 import { UserSchema } from '../../types/SearchUserLoggedApiResponse'
 import { closeDropDownMenu } from '../../app/slices/panelSlice';
 
-const Header = lazy(() => import('../header/Header'));
+import Header from '../header/Header';
 const TimeLine = lazy( () => import('./timeline'));
 const ProfileBanner = lazy( () => import('./profileBanner'));
 
@@ -48,6 +48,7 @@ const TemplateProfile = () => {
         apiClient.get(ROUTES_API.userLogged(),signal)
         .then(response => {
             //Guardamos datos en el store
+            console.log(response)
             setDataUserLogged(response.data)
         })
         .catch(err => {
@@ -57,18 +58,18 @@ const TemplateProfile = () => {
     }
 
     useEffect(() => {
-        let abortController = null;
-        //Verificamos si los datos del usuario logueado se encuentran en el estado global
-        if(userLogged?.entities === undefined){
-            abortController = new AbortController();
-            const signal = abortController.signal;
-            fetchData(signal);
-        }        
-        setDataUserProfile(dataLoader as typeof UserSchema);
-        return () => {
-            abortController?.abort()
-            dispatch(removeUserProfile())
-        }
+      let abortController = null;
+      //Verificamos si los datos del usuario logueado se encuentran en el estado global
+      if(userLogged?.entities === undefined){
+          abortController = new AbortController();
+          const signal = abortController.signal;
+          fetchData(signal);
+      }        
+      setDataUserProfile(dataLoader as typeof UserSchema);
+      return () => {
+          abortController?.abort()
+          dispatch(removeUserProfile())
+      }
     },[]);
 
     useEffect(() => {
@@ -79,7 +80,8 @@ const TemplateProfile = () => {
       <>
         {
           <div 
-            className='bg-gray-200 overflow-auto h-screen' 
+            className='bg-gray-200'
+            style={{overflow:'auto', height:'100vh'}} 
             id='infiniteScroll'
             onClick={handleClick} 
             >
@@ -99,7 +101,7 @@ const TemplateProfile = () => {
                                <Outlet/>
                              :
                                <TimeLine/> 
-                          }
+                           }
                       </> 
                     }
                   </div>      

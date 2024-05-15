@@ -4,6 +4,7 @@ import NotFound from "../components/errors/NotFound";
 import { client } from "../api/client";
 import { ROUTES_API, nameCookieSessionApp } from "../config";
 import { getCookie } from "../utils/cookies";
+import { errorMessagesApi } from "../utils/errorMessagesApi";
 
 const Login = lazy(() => import('../pages/Login'))
 const SignUp = lazy(() => import('../pages/SignUp'))
@@ -63,8 +64,16 @@ export const routes = [
                     .then(response => response.data)
                     .catch( error => error)
 
+                    //Verficamos si en la respuesta viene algun tipo de error
                     if(data.status == 403 || data.status == 404 || data.status == 401 || data.status == 500){
+                        console.log('entre aca')
                         throw {statusText: data.statusText,  status: data.status };
+                    }
+
+                    //Como la api devuelve un 200 con un message cuando no encuentra un usuario, 
+                    //verificamos si la respuesta trajo un message
+                    if(data.message == errorMessagesApi.userNotFound){
+                        throw {statusText: errorMessagesApi.userNotFound,  status: 404 };
                     }
 
                     return data ; 

@@ -1,15 +1,15 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
-import { client } from '../../../api/client';
-import { ROUTES_API } from '../../../config';
-import { Data, Datum, Posts } from '../../../types/SearchPostProfileApiResponse'
-import { EndPointApi } from '../../../types';
-import { Post } from '../../Posts/Post';
-import { CreatePost } from '../../Posts/CreatePost';
-import useReduxHook from '../../../hooks/useReduxHook';
-import { RootState } from '../../../app/store';
-import { useActionForErrorsHook } from '../../../hooks/useActionForErrorsHook';
-import MyFacebookLoader from '../../loaders/MyFacebookLoader';
+import { client } from '../../../../api/client';
+import { ROUTES_API } from '../../../../config';
+import { Data, Datum, Posts } from '../../../../types/SearchPostProfileApiResponse'
+import { EndPointApi } from '../../../../types';
+import { Post } from '../../../Posts/Post';
+import { CreatePost } from '../../../Posts/CreatePost';
+import useReduxHook from '../../../../hooks/useReduxHook';
+import { RootState } from '../../../../app/store';
+import { useActionForErrorsHook } from '../../../../hooks/useActionForErrorsHook';
+import MyFacebookLoader from '../../../loaders/posts/MyFacebookLoader';
 
 type PropsFetchData = { 
   page:number|null, 
@@ -36,9 +36,10 @@ const Feed = () => {
   const proccessDataFetch = (data:Data) => {
     const posts = (data.posts) as Posts
     
-    //Verficamos si la respuesta trajo nuevos posts
-    if(posts.data.length === 0) return setHasMore(false);
-
+    //Verficamos si la siguiente page tiene datos
+    if(posts.next_page_url === null){
+      setHasMore(false);
+    }
     //Pusheamos los nuevos posts
     const newDataPosts = posts.data
     setItems([...items, ...newDataPosts])
@@ -49,9 +50,10 @@ const Feed = () => {
     
     const uri = page === null
       ? url
-      : ROUTES_API.searchPostsUser(`${userProfile?.entities?.id}`,PAGINATIONDEFAULT,page);
+      : ROUTES_API.searchPostsUser(`${userProfile?.user?.id}`,PAGINATIONDEFAULT,page);
 
     if(uri === null) return   
+
 
     const request = signal != undefined 
       ? apiClient.get(uri,signal) 
@@ -74,7 +76,6 @@ const Feed = () => {
   useEffect(()=>{
     const abortcontroller = new AbortController()
     const signal = abortcontroller.signal
-    
     fetchData({
       page:1,
       url:null,
@@ -88,7 +89,7 @@ const Feed = () => {
 
   return (
     <>
-        {
+        { 
           <InfiniteScroll
               dataLength={items.length} //This is important field to render the next data
               next={ () => { 
@@ -123,8 +124,8 @@ const Feed = () => {
                   ))
                   }
               </div>
-              </InfiniteScroll>
-        }
+            </InfiniteScroll>
+          } 
     </>
   )
 }
