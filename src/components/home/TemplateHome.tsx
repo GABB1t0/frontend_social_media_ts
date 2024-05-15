@@ -62,8 +62,8 @@ const TemplateHome = () => {
   return (
     <>
       <Suspense>
-        
-          <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5' onClick={handleClick} >
+        <div className= "w-screen" onClick={handleClick} >
+        <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5' >
         <Header navBlock={false} />
             <aside className="lg:w-[25%] sticky top-20 h-4/5 z-[49]">
               <div className="hidden md:flex flex-col gap-4 ">
@@ -82,6 +82,11 @@ const TemplateHome = () => {
               </div>
             </aside>
           </div>
+          
+        </div>
+        
+        
+          
           
       </Suspense>
     </>
