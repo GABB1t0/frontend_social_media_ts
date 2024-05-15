@@ -34,7 +34,7 @@ const NavigationProfile = ({location}:Props) => {
                 location.includes('friends') 
                 ? 'font-semibold  transition text-red-400' 
                 :'font-semibold  transition hover:text-red-400' } >
-                <Link to='friends'>Friends</Link>
+                <Link to='/profile/3'>Friends</Link>
             </li>  
         </ul>
    </div>
