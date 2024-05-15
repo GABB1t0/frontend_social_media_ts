@@ -87,7 +87,13 @@ export const routes = [
             },
             {
                 path:'/SavePost', 
-                element:<SavePost/>
+                element:<SavePost/>,
+                loader: async () => {
+                    if(getCookie(nameCookieSessionApp) === undefined)
+                        throw {statusText: "Unauthenticated",  status: 401 };
+
+                    return true;
+                }
             }
         ]
     }

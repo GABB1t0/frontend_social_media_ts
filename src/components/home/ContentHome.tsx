@@ -21,12 +21,12 @@ const ContentHome = () => {
     }
   }
   
-  const {verified} = useDispatchUser()
+  
 
   return (
     <>
     
-      {verified && 
+      
 
       <div className= "w-screen" onClick={handleClick}>
         <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5'>
@@ -50,7 +50,7 @@ const ContentHome = () => {
 
         
       
-      }
+      
           
           
     </>

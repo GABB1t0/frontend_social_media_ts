@@ -8,16 +8,21 @@ import { DropdownMenu } from '../dropdownmenu/DropdownMenu'
 import { Link } from 'react-router-dom'
 import { Notification } from '../notification/Notification'
 import { SUPPORTED_ROUTES } from '../../config'
+import { closeDropDownMenu } from '../../app/slices/panelSlice'
+import useReduxHook from "../../hooks/useReduxHook";
+import { RootState } from '../../app/store'
 
 type Props = {
     navBlock: boolean
 }
 
 const Header: React.FC<Props> = ({navBlock}) => {
+  const { dispatch,myUseSelector} = useReduxHook()
+  const panelState = myUseSelector((state:RootState) => state.statePanel);
 
   const [search, setSearch] = useState(false)
 
-  const searchInputClass = search ? 'flex w-screen px-2 justify-between border-b-2  items-center bg-white border-b-orange-400 absolute top-16 z-50' : 'hidden'
+  
 
   const navBlockClass = navBlock ? 'hidden' : 'flex gap-8 sm:gap-16 justify-self-center'
 
@@ -28,9 +33,18 @@ const Header: React.FC<Props> = ({navBlock}) => {
     console.log(search)
   }
 
+  const handleClickToClose = (e:React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target && target.id !== 'dropdownmenu') {
+      if (panelState.stateDropdownMenu) {
+        dispatch(closeDropDownMenu());
+      }
+    }
+  }
+
   return (
     <>
-    <div className='fixed z-50 top-0 left-0 right-0'>
+    <div className='fixed z-50 top-0 left-0 right-0' onClick= {handleClickToClose}>
       <header className="flex h-16 justify-center items-center bg-[#fcf2e8] shadow-sm ">
 
       <div className= {contentClass}>
@@ -77,7 +91,7 @@ const Header: React.FC<Props> = ({navBlock}) => {
 
       </div>
       </header>
-      <form id='searchID2' className= {searchInputClass}>
+      <form id='searchID2' className= {search ? 'flex w-screen px-2 justify-between border-b-2  items-center bg-white border-b-orange-400 absolute top-16 z-50' : 'hidden'}>
         <input id='input2' className='bg-transparent h-full w-full focus:outline-none' type="text" placeholder="Search"/>
         <IconButton >
           <SearchIcon/>
@@ -91,3 +105,4 @@ const Header: React.FC<Props> = ({navBlock}) => {
 }
 
 export default Header;
+
