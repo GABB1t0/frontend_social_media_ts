@@ -2,9 +2,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 export const Post = ({ data }) =>{
-
-  
-  console.log(data)
   return(
     <>
       <article  className="flex flex-col bg-white shadow-lg p-5 rounded-md min-h-40 justify-between">
@@ -18,9 +15,12 @@ export const Post = ({ data }) =>{
         
         <div className='mt-2'>
           <p>{data?.description}</p>
-          <div className='w-full min-h-72 h-72 rounded-md mt-1 mb-1 p-2 border-2 border-gray-200'>
-            <img src={data?.images[0]?.url} alt={data?.description} className='w-full h-full rounded-md object-contain' />
-          </div>
+          {
+            data?.images[0]?.url &&
+              <div className='w-full min-h-72 h-72 rounded-md mt-1 mb-1 p-2 border-2 border-gray-200'>
+                <img src={data?.images[0]?.url} alt={data?.description} className='w-full h-full rounded-md object-contain' />
+              </div>
+          }
         </div>
 
 
