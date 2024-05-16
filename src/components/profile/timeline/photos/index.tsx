@@ -62,11 +62,11 @@ const Photos = () => {
         }
       </header>
 
-      <div className="w-full grid grid-cols-3 transition duration-500 ease-in-out">
+      <main className="w-full grid grid-cols-3 transition duration-500 ease-in-out">
         {
           data?.map(image => <Image key={image?.id} data={image}/> )
         }
-      </div>
+      </main>
     </div>  
   )
 }
