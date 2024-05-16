@@ -32,4 +32,9 @@ export type EndPointApi = '/user'
     | 'auth/login'
     | 'auth/register'
     | 'auth/logout'
-    | 'auth/email/verification-notification'
+    | 'auth/email/verification-notification';
+
+export type ErrForActions = {
+    status:number,
+    statusText:string
+}
