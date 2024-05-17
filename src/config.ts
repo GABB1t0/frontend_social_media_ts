@@ -27,7 +27,7 @@ export const ROUTES_API =  {
     signUp: ():EndPointApi => 'auth/register',
     logout: ():EndPointApi => 'auth/logout',
     verificationEmailSend: ():EndPointApi => 'auth/email/verification-notification',
-    userVerified: (user:string):EndPointApi => `/user/${user}/verificationEmail`
+    userVerified: ():EndPointApi => `/user/verificationEmail`
 }
 
 export const SUPPORTED_ROUTES = {

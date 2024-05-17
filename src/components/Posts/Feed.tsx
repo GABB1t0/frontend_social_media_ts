@@ -9,20 +9,23 @@ import { RootState } from "../../app/store";
 import { Data, Datum, Posts } from "../../types/SearchPostProfileApiResponse";
 import { EndPointApi } from "../../types";
 import MyFacebookLoader from "../loaders/posts/MyFacebookLoader";
+import { PostsEnders } from "../enders/PostsEnders";
+import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
 
 
 
-interface PropsFetch{
-  page: number|null,
-  url:EndPointApi|null,
+
+
+type PropsFetchData = { 
+  page:number|null, 
+  url:EndPointApi|null, 
   signal?:AbortSignal
 }
 
 type ErrForActions = {
-  status:number,
-  statusText:string
+  status:number;
+  statusText:string;
 }
-
 
 export const Feed = ()=>{
 
@@ -31,6 +34,7 @@ export const Feed = ()=>{
   const [hasMore, setHasMore] = useState(true);
   const clients = client()
   const { myUseSelector } = useReduxHook();
+  const { executeActions } = useActionForErrorsHook();
   const PAGINATIONDEFAULT = 3;
 
   const user = myUseSelector((state:RootState) => state?.userLogged);
@@ -46,7 +50,7 @@ export const Feed = ()=>{
     setPage(data)
   }
 
-  const fetchPosts = async ({page,url, signal}:PropsFetch)=>{
+  const fetchPosts = async ({page,url, signal}:PropsFetchData)=>{
 
     const uri = page == null 
     ? url 
@@ -66,7 +70,7 @@ export const Feed = ()=>{
       console.log(posts)
       
     } catch (err) {
-      const {status, statusText} = err as ErrForActions;
+      const {status, statusText} =  err as ErrForActions;
       executeActions({status: status, statusText:statusText})
     }
   }
@@ -117,21 +121,24 @@ export const Feed = ()=>{
           </div>
           }
           endMessage={
-              <div className='flex justify-end mb-3 p-2'>
-              <div className="w-full md:w-[100%] overflow-y-auto">
-                  <p>Ya no hay mas posts</p>
-              </div>
+              <div className='flex w-full justify-end mb-3 py-2'>
+                <div className="w-full md:w-[100%] overflow-y-auto">
+                    <PostsEnders/>
+                </div>
               </div>
           }
         >
-          {
-            
-            posts.map((item) => (
+          
+            <div className="flex flex-col gap-4">
+              {posts.map((item) => (
               
-                <Post key={item.id} data={item}/>
-                
-            ))
-          }
+              <Post key={item.id} data={item}/>
+              
+              ))}
+
+            </div>
+            
+          
 
         </InfiniteScroll>
       }
@@ -175,6 +182,4 @@ export const FeedWithoutCreate: React.FC = () => {
   )
 }
 
-function executeActions(arg0: { status: ErrForActions; statusText: ErrForActions; }) {
-  throw new Error("Function not implemented.");
-}
+

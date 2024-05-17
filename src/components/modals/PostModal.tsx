@@ -25,7 +25,10 @@ export const PostModal: React.FC<props> = () => {
   const inputImgRef = useRef<HTMLInputElement|null>(null)
 
   const [value, setValue] = useState("");
-  const [file, setFile] = useState<string|null>(null);
+  const [file, setFile] = useState<string[]>([]);
+
+  document.body.style.overflow = "hidden"
+  document.body.style.maxHeight="100vh"
     
   const resizeTextArea = () =>{
 
@@ -38,6 +41,7 @@ export const PostModal: React.FC<props> = () => {
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) =>{
 
     const formData = new FormData(e.currentTarget);
+    console.log(formData.get("image"));
     formData.append("description", value)
     
     try{
@@ -53,17 +57,29 @@ export const PostModal: React.FC<props> = () => {
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.files);
+    
+
     if(!e.target.files) return
-    setFile(URL.createObjectURL(e.target.files[0]));
+    const sust = e.target.files[Symbol.iterator](); 
+    const arr = [...sust]
+    const arr2 = arr.map(item => URL.createObjectURL(item))
+    console.log(arr2);
+    setFile(arr2);
+    
     
   }
 
-  const handleDelete = () =>{
-    setFile(null)
-    if(!inputImgRef.current) return
-    inputImgRef.current.value = ""
+  const handleDelete = (key: number, item:string) =>{
+    
+    const newFile = file.filter(item2 => item2 !== item)
+    setFile(newFile)
+    
+    if(!inputImgRef.current || !inputImgRef.current.files) return
+    /* inputImgRef.current.files.splice(key, 1); */
     
   }
+
+  
 
   
 
@@ -87,16 +103,19 @@ export const PostModal: React.FC<props> = () => {
             <input name="image" id="image" type="file" 
             className="absolute hidden " accept="image/png, image/jpeg"
             ref={inputImgRef}
-            onChange={handleChange}/>
+            onChange={handleChange}
+            multiple/>
 
             {file != null 
             && 
-            <div className="relative mt-4">
-              <span className="absolute hover:cursor-pointer right-0 bg-white rounded-full opacity-50" onClick={handleDelete}>
+            file.map((item,key) => 
+            <div key={key} className="relative mt-4">
+              <span className="absolute hover:cursor-pointer right-0 bg-white rounded-full opacity-50" onClick={()=>handleDelete(key,item)}>
                 <DeleteIcon/>
               </span>
-              <img src={file} alt="" className="max-w-full mx-auto "/>
-            </div>
+              <img src={item} alt="" className="max-w-full mx-auto "/>
+            </div>)
+            
             }
             
             <label htmlFor="image" className="hover:cursor-pointer bg-[#fc6232]  px-2 py-1 text-white flex justify-center hover:opacity-50 mt-4">

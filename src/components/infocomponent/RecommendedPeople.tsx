@@ -20,6 +20,10 @@ export const RecommendedPeople: React.FC =()=>{
 
  const {people} = useGetUserRecommended()
 
+ const handleClick = (id:number) => () => {
+   window.location.href = `/profile/${id}`
+ }
+
  
       
 
@@ -29,9 +33,10 @@ export const RecommendedPeople: React.FC =()=>{
         people.map((person: people,index:number) => (
           index < max_items &&
           <li key={person.id} className="flex  gap-2 justify-center self-start">
+            
             <img src={person.url_image_profile ? person.url_image_profile : '../../../src/assets/img/blank-profile-picture.jpg'} alt="" className="size-9 rounded-full" />
             <div className="flex self-center">
-              <h3 className="font-bold text-sm w-[125px] whitespace-nowrap overflow-hidden text-ellipsis">{person.name} {person.lastname}</h3>
+              <h3 className="font-bold text-sm w-[125px] whitespace-nowrap overflow-hidden text-ellipsis hover:cursor-pointer" onClick={handleClick(person.id)}>{person.name} {person.lastname}</h3>
               
             </div>
           </li>

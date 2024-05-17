@@ -44,7 +44,7 @@ const Header: React.FC<Props> = ({navBlock}) => {
 
   return (
     <>
-    <div className='fixed z-50 top-0 left-0 right-0' onClick= {handleClickToClose}>
+    <div className='fixed z-50 top-0 left-0 right-0 w-full' onClick= {handleClickToClose}>
       <header className="flex h-16 justify-center items-center bg-[#fcf2e8] shadow-sm ">
 
       <div className= {contentClass}>

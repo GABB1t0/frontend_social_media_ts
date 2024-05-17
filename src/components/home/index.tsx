@@ -1,11 +1,11 @@
-import { Suspense, lazy, useEffect } from "react";
-import { Feed } from "../Posts/Feed"
-import { ImageProfileHome } from "../ImageProfileHome/ImageProfileHome"
-import { useDispatchUser } from "../../hooks/useDispatchUser";
-import { RecommendedPeople } from "../infocomponent/RecommendedPeople";
-import Loader from "../loaders/redirections/LoaderForRedirections";
+import { Suspense, lazy } from "react";
 
-  
+
+import Loader from "../loaders/redirections/LoaderForRedirections";
+import { useVerifyUser } from "../../hooks/useVerifyUser";
+import useReduxHook from "../../hooks/useReduxHook";
+import { RootState } from "../../app/store";
+import { useDispatchUser } from "../../hooks/useDispatchUser";
 
 
 
@@ -17,7 +17,13 @@ const ContentHome = lazy(() => import('./ContentHome'));
 
 const TemplateHome = () => {
 
-  const {verified} = useDispatchUser()
+  const { myUseSelector, dispatch } = useReduxHook();
+  const userLogged = myUseSelector((state:RootState) => state?.userLogged);
+
+  useDispatchUser()
+
+  
+  const {verified} = useVerifyUser();
   
       
   return (
@@ -28,7 +34,9 @@ const TemplateHome = () => {
         <Header navBlock={false} />
         <Suspense fallback={<div><Loader/></div>}>
           
-          {verified && <ContentHome/>}
+          {(verified && userLogged.entities) &&
+          
+          <ContentHome/>}
             
         </Suspense>
       

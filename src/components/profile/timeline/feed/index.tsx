@@ -10,6 +10,7 @@ import useReduxHook from '../../../../hooks/useReduxHook';
 import { RootState } from '../../../../app/store';
 import { useActionForErrorsHook } from '../../../../hooks/useActionForErrorsHook';
 import MyFacebookLoader from '../../../loaders/posts/MyFacebookLoader';
+import { PostsEnders } from '../../../enders/PostsEnders';
 
 type PropsFetchData = { 
   page:number|null, 
@@ -110,9 +111,9 @@ const Feed = () => {
               }
               endMessage={
                   <div className='flex justify-end mb-3 p-2'>
-                  <div className="w-full md:w-[100%] overflow-y-auto">
-                      <p>Ya no hay mas posts</p>
-                  </div>
+                    <div className="w-full md:w-[100%] overflow-y-auto">
+                      <PostsEnders/>
+                    </div>
                   </div>
               }
               >

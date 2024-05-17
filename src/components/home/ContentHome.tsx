@@ -11,6 +11,7 @@ import { closeDropDownMenu } from "../../app/slices/panelSlice";
 const ContentHome = () => {
   const { dispatch,myUseSelector} = useReduxHook()
   const panelState = myUseSelector((state:RootState) => state.statePanel);
+  
 
   const handleClick = (e:React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
@@ -28,9 +29,12 @@ const ContentHome = () => {
     
       
 
-      <div className= "w-screen" onClick={handleClick}>
-        <div className='container flex justify-center sm:w-11/12 mx-auto my-3 md:gap-6 lg:gap-6 xl:w-4/5'>
-          <aside className="lg:w-[25%] sticky top-20 h-4/5 z-[49]">
+      <div 
+        className='bg-gray-200  min-h-screen'
+        onClick={handleClick}
+      >
+        <div className='container flex justify-center sm:w-11/12 mx-auto mt-3 md:gap-6 lg:gap-6 xl:w-4/5'>
+          <aside className="lg:w-[25%] sticky top-20 h-4/5 mt-[68px] z-[49]">
             <div className="hidden md:flex flex-col gap-4 ">
               <ImageProfileHome />
               <RecommendedPeople/>
