@@ -4,8 +4,7 @@ import { ROUTES_API } from "../../../../config";
 import useReduxHook from "../../../../hooks/useReduxHook";
 import { RootState } from "../../../../app/store";
 import { useActionForErrorsHook } from "../../../../hooks/useActionForErrorsHook";
-import { DatumSchema, ImageSchema } from "../../../../types/ImagesResponseApi";
-import ImagePanelLoader from "../../../loaders/profile/ImagePanelLoader";
+import { DatumSchema, Image as TypeImage } from "../../../../types/ImagesResponseApi";
 import HeaderPanelLoader from "../../../loaders/profile/HeaderPanelLoader";
 import { Link } from "react-router-dom";
 
@@ -18,7 +17,7 @@ type ErrForActions = {
 
 const Photos = () => {
     const { myUseSelector } = useReduxHook();
-    const [data, setData] = useState<typeof ImageSchema []>()
+    const [data, setData] = useState<TypeImage []>()
     const userProfile = myUseSelector((state:RootState) => state.userProfile);
     const { executeActions } = useActionForErrorsHook();
     const apiClient = client();
@@ -62,11 +61,11 @@ const Photos = () => {
         }
       </header>
 
-      <div className="w-full grid grid-cols-3 transition duration-500 ease-in-out">
+      <ul className="w-full grid grid-cols-3 transition duration-500 ease-in-out">
         {
           data?.map(image => <Image key={image?.id} data={image}/> )
         }
-      </div>
+      </ul>
     </div>  
   )
 }
