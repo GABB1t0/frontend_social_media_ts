@@ -26,6 +26,7 @@ export const PostModal: React.FC<props> = () => {
 
   const [value, setValue] = useState("");
   const [file, setFile] = useState<string[]>([]);
+  const [images,setImages]= useState<File[]>([])
 
   document.body.style.overflow = "hidden"
   document.body.style.maxHeight="100vh"
@@ -40,8 +41,26 @@ export const PostModal: React.FC<props> = () => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) =>{
 
+    if(!inputImgRef.current || !inputImgRef.current.files) return
+    const sust = inputImgRef.current?.files[Symbol.iterator](); 
+    const arr = [...sust]
+
     const formData = new FormData(e.currentTarget);
-    console.log(formData.get("image"));
+    if(images.length > 0){
+      images.forEach((file)=>{
+        formData.append("images[]", file)
+      })
+    }else{
+
+      arr.forEach((file)=>{
+        formData.append("images[]", file)
+      }
+      )
+
+    }
+    
+    console.log(formData.get("images"));
+
     formData.append("description", value)
     
     try{
@@ -62,6 +81,7 @@ export const PostModal: React.FC<props> = () => {
     if(!e.target.files) return
     const sust = e.target.files[Symbol.iterator](); 
     const arr = [...sust]
+    console.log(arr);
     const arr2 = arr.map(item => URL.createObjectURL(item))
     console.log(arr2);
     setFile(arr2);
@@ -76,6 +96,11 @@ export const PostModal: React.FC<props> = () => {
     
     if(!inputImgRef.current || !inputImgRef.current.files) return
     /* inputImgRef.current.files.splice(key, 1); */
+    console.log(inputImgRef.current.files);
+    const sust = inputImgRef.current.files[Symbol.iterator](); 
+    const arr = [...sust]
+    arr.splice(key, 1)
+    setImages(arr)
     
   }
 
