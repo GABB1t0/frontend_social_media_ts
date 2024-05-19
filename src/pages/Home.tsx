@@ -1,5 +1,4 @@
-import TemplateHome from "../components/home/index"
-import { useDispatchUser } from "../hooks/useDispatchUser"
+import TemplateHome from "../components/home"
 
 const Home = () => {
   
