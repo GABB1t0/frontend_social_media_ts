@@ -7,14 +7,10 @@ import { ROUTES_API } from "../../config";
 import useReduxHook from "../../hooks/useReduxHook";
 import { RootState } from "../../app/store";
 import { Data, Datum, Posts } from "../../types/SearchPostProfileApiResponse";
-import { EndPointApi } from "../../types";
+import { EndPointApi, ErrForActions } from "../../types";
 import MyFacebookLoader from "../loaders/posts/MyFacebookLoader";
-import { PostsEnders } from "../enders/PostsEnders";
+import  PostsEnders  from "../enders";
 import { useActionForErrorsHook } from "../../hooks/useActionForErrorsHook";
-
-
-
-
 
 type PropsFetchData = { 
   page:number|null, 
@@ -22,12 +18,7 @@ type PropsFetchData = {
   signal?:AbortSignal
 }
 
-type ErrForActions = {
-  status:number;
-  statusText:string;
-}
-
-export const Feed = ()=>{
+const Feed = ()=>{
 
   const [posts, setPosts] = useState<Datum[]>([])
   const [page, setPage] = useState<Data>()
@@ -98,88 +89,81 @@ export const Feed = ()=>{
 
   return(
     <>
-    <div className=" w-full flex flex-col gap-4">
-      <CreatePost/>
-      {
-        <InfiniteScroll
-          dataLength={posts.length} //This is important field to render the next data
-          next={ () => { 
-            fetchPosts({
-              page:null,
-              url:acomodarUrl(page?.posts?.next_page_url)
-          })
-          }}
-          hasMore={hasMore}
-          scrollableTarget='infiniteScroll'
-          loader={
-          <div className='flex justify-end border-2 p-2'>
-              <div className="w-full md:w-[100%] overflow-y-auto gap-2">
-                  <MyFacebookLoader />
-                  
-                  
-              </div>
-          </div>
-          }
-          endMessage={
-              <div className='flex w-full justify-end mb-3 py-2'>
-                <div className="w-full md:w-[100%] overflow-y-auto">
-                    <PostsEnders/>
-                </div>
-              </div>
-          }
-        >
-          
-            <div className="flex flex-col gap-4">
-              {posts.map((item) => (
-              
-              <Post key={item.id} data={item}/>
-              
-              ))}
-
-            </div>
-            
-          
-
-        </InfiniteScroll>
-      }
-      
-      
-    </div>
-      
-    </>
-  )
-}
-
-export const FeedWithoutCreate: React.FC = () => {
-  return (
-    <>
       <div className=" w-full flex flex-col gap-4">
-      
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      <Post/>
-      
-    </div>
-
+        {
+          <InfiniteScroll
+            dataLength={posts.length} //This is important field to render the next data
+            next={ () => { 
+              fetchPosts({
+                page:null,
+                url:acomodarUrl(page?.posts?.next_page_url)
+            })
+            }}
+            hasMore={hasMore}
+            scrollableTarget='infiniteScroll'
+            loader={
+            <div className='flex justify-end border-2 p-2'>
+                <div className="w-full md:w-[100%] overflow-y-auto gap-2">
+                    <MyFacebookLoader />
+                    <MyFacebookLoader />
+                </div>
+            </div>
+            }
+            endMessage={
+                <div className='flex w-full justify-end mb-3 py-2'>
+                  <div className="w-full md:w-[100%] overflow-y-auto">
+                      <PostsEnders/>
+                  </div>
+                </div>
+            }
+          >
+            <div className="flex flex-col gap-4">
+              <CreatePost/>
+              { 
+                posts.map((item) => (
+                  <Post key={item.id} data={item}/>
+                ))
+              }
+            </div>
+          </InfiniteScroll>
+        }
+      </div>
     </>
   )
 }
+
+export default Feed;
+
+// export const FeedWithoutCreate: React.FC = () => {
+//   return (
+//     <>
+//       <div className=" w-full flex flex-col gap-4">
+      
+//       {/* <Post/> */}
+//       {/* <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/>
+//       <Post/> */}
+      
+//     </div>
+
+//     </>
+//   )
+// }
 
 

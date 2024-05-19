@@ -1,5 +1,4 @@
-
-import { Feed } from "../Posts/Feed"
+import  Feed  from "../Posts/Feed"
 import { ImageProfileHome } from "../ImageProfileHome/ImageProfileHome"
 import { useDispatchUser } from "../../hooks/useDispatchUser";
 import { RecommendedPeople } from "../infocomponent/RecommendedPeople";
@@ -7,12 +6,10 @@ import useReduxHook from "../../hooks/useReduxHook";
 import { RootState } from "../../app/store";
 import { closeDropDownMenu } from "../../app/slices/panelSlice";
 
-
 const ContentHome = () => {
   const { dispatch,myUseSelector} = useReduxHook()
   const panelState = myUseSelector((state:RootState) => state.statePanel);
   
-
   const handleClick = (e:React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target && target.id !== 'dropdownmenu') {
@@ -22,13 +19,8 @@ const ContentHome = () => {
     }
   }
   
-  
-
   return (
     <>
-    
-      
-
       <div 
         className='bg-gray-200  min-h-screen'
         onClick={handleClick}
