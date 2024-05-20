@@ -4,15 +4,17 @@ import NotFound from "../components/errors/NotFound";
 import { client } from "../api/client";
 import { ROUTES_API, nameCookieSessionApp } from "../config";
 import { getCookie } from "../utils/cookies";
+import { errorMessagesApi } from "../utils/errorMessagesApi";
 
 const Login = lazy(() => import('../pages/Login'))
 const SignUp = lazy(() => import('../pages/SignUp'))
 const Profile = lazy(() => import('../pages/Profile'));
-const Friends = lazy(() => import('../components/profile/Friends'));
-const About  = lazy(() => import('../components/profile/About'));
-const Photos = lazy(() => import('../components/profile/Photos'));
+const Friends = lazy(() => import('../components/profile/friends/Friends'));
+const About  = lazy(() => import('../components/profile/about/About'));
+const Photos = lazy(() => import('../components/profile/photos/Photos'));
 const EmailVerification = lazy(() => import('../pages/EmailVerification'));
 const Home = lazy(() => import('../pages/Home'));
+const SavePost = lazy(() => import('../pages/SavePosts'));
 
 const apiClient = client();
 export const routes = [
@@ -40,8 +42,15 @@ export const routes = [
                 element: <Home/>,
             },
             {
-                path:'/EmailVerification', 
-                element:<EmailVerification />
+                path:'/emailVerification', 
+                element:<EmailVerification />,
+                loader: async () => {
+                    if(getCookie(nameCookieSessionApp) === undefined)
+                        throw {statusText: "Unauthenticated",  status: 401 };
+
+                    return true;
+                }
+                
             },
             {
                 path:'/profile/:id/',
@@ -55,8 +64,16 @@ export const routes = [
                     .then(response => response.data)
                     .catch( error => error)
 
-                    if(data.status == 404 || data.status == 401 || data.status == 500){
+                    //Verficamos si en la respuesta viene algun tipo de error
+                    if(data.status == 403 || data.status == 404 || data.status == 401 || data.status == 500){
+                        console.log('entre aca')
                         throw {statusText: data.statusText,  status: data.status };
+                    }
+
+                    //Como la api devuelve un 200 con un message cuando no encuentra un usuario, 
+                    //verificamos si la respuesta trajo un message
+                    if(data.message == errorMessagesApi.userNotFound){
+                        throw {statusText: errorMessagesApi.userNotFound,  status: 404 };
                     }
 
                     return data ; 
@@ -76,6 +93,16 @@ export const routes = [
                         element:<Photos />,
                     } 
                 ]
+            },
+            {
+                path:'/SavePost', 
+                element:<SavePost/>,
+                loader: async () => {
+                    if(getCookie(nameCookieSessionApp) === undefined)
+                        throw {statusText: "Unauthenticated",  status: 401 };
+
+                    return true;
+                }
             }
         ]
     }

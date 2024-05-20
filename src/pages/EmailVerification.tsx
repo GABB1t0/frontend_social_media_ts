@@ -1,7 +1,7 @@
+import TemplateEmailVerification from "../components/emailVerification"
+
 const EmailVerification = () => {
-  return (
-    <div>EmailVerification</div>
-  )
+  return <TemplateEmailVerification/>
 }
 
 export default EmailVerification

@@ -1,7 +1,7 @@
+import TemplateProfile from "../components/profile"
+
 const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
+  return <TemplateProfile/>
 }
 
 export default Profile

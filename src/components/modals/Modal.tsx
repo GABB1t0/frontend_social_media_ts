@@ -13,8 +13,8 @@ export const Modal: React.FC<Props> =({children, title})=>{
 
     return (
         <>
-          <div className="flex justify-center items-center h-screen w-screen bg-black bg-opacity-50 z-50 top-[50%] left-[50%] fixed -translate-x-1/2 -translate-y-1/2" onClick={() => {
-          
+          <div className="flex justify-center items-center h-screen w-screen bg-black bg-opacity-50 z-50 top-[50%] left-[50%] fixed -translate-x-1/2 -translate-y-1/2 " onClick={() => {
+          document.body.style.overflow = "auto"
           dispatch(setModalPost())
           } }>
           </div>

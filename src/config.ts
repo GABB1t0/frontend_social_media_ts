@@ -5,7 +5,7 @@ export const nameCookieSessionApp = 'cookie_api_social_media_session'
 export const ROUTES_API =  {
     userLogged: ():EndPointApi => '/user',
     findUser: (user:string):EndPointApi => `find/${user}/user`,
-    imagesUser: (user:string):EndPointApi => `/user/view/${user}/images`,
+    getImagesUser: (user:string,offset:number,page:number):EndPointApi => `/user/view/${user}/images/${offset}?page=${page}`,
     updateFieldUser: (user:string):EndPointApi => `/user/${user}/update`,
     deleteUser: (user:string):EndPointApi => `/user/${user}/destroy`,
     searchPostsUser: (user:string,offset:number,page:number):EndPointApi => `/posts/${user}/${offset}?page=${page}`,
@@ -26,7 +26,8 @@ export const ROUTES_API =  {
     login: ():EndPointApi => 'auth/login',
     signUp: ():EndPointApi => 'auth/register',
     logout: ():EndPointApi => 'auth/logout',
-    verificationEmailSend: ():EndPointApi => 'auth/email/verification-notification'
+    verificationEmailSend: ():EndPointApi => 'auth/email/verification-notification',
+    userVerified: ():EndPointApi => `/user/verificationEmail`
 }
 
 export const SUPPORTED_ROUTES = {

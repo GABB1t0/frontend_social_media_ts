@@ -11,7 +11,7 @@ export type RoutesApp = '/'
 
 export type EndPointApi = '/user'
     | `find/${string}/user`
-    | `/user/view/${string}/images`
+    | `/user/view/${string}/images/${number}?page=${number}`
     | `/user/${string}/update`
     | `/user/${string}/destroy`
     | `/posts/${string}/${number}?page=${number}`
@@ -32,4 +32,9 @@ export type EndPointApi = '/user'
     | 'auth/login'
     | 'auth/register'
     | 'auth/logout'
-    | 'auth/email/verification-notification'
+    | 'auth/email/verification-notification';
+
+export type ErrForActions = {
+    status:number,
+    statusText:string
+}

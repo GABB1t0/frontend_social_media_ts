@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserSchema } from '../../types/SearchUserLoggedApiResponse'
 import { statusRequestApiTypes } from '../../types';
+import { z } from 'zod';
 
 export type UserLoggedState =  {
-    entities?: typeof UserSchema,
+    entities: z.infer<typeof UserSchema> | undefined;
     loading: statusRequestApiTypes
 }
 

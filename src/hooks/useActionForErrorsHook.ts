@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { errorMessagesApi } from "../utils/errorMessagesApi";
+import { deleteCookie, getCookie } from "../utils/cookies";
+import { nameCookieSessionApp } from "../config";
 
 type Props = { 
     status: number, 
@@ -20,12 +22,17 @@ export const useActionForErrorsHook = () => {
                 alert(statusText);
             }else if(statusText === errorMessagesApi.errorVerificationEmail){
                 //Redireccionar
-                navigate('/profile')//Modificar por ruta de verificacion de email
+                setTimeout(() => {
+                    navigate('/emailVerification')//Modificar por ruta de verificacion de email
+                },1000)
             }
         }
         
         if(status == 401){
-            navigate('/')
+            const tkn = getCookie(nameCookieSessionApp);
+            if(tkn !== undefined) deleteCookie(nameCookieSessionApp);
+            alert('Tu sesion ha expirado');
+            return window.location.href = '/login';
         }
         
         if(status == 500){

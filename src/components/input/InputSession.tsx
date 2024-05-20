@@ -25,7 +25,7 @@ const InputSession: React.FC<InputProps> = ({name, required, type,children}) => 
 
     return (
         <div className="group relative">
-            <label htmlFor={name} className= {content ?  'bg-gradient-to-t from-transparent to-white to-50% absolute left-3 -translate-y-2/4 top-0 text-sm' :'bg-gradient-to-t from-transparent to-white to-50% absolute top-2/4 -translate-y-2/4 left-3 group-hover:top-0  group-hover:text-sm duration-500 ' } >{children}</label>
+            <label htmlFor={name} className= {content ?  'bg-gradient-to-t from-transparent to-white to-50% absolute left-3 -translate-y-2/4 top-0 text-sm' :'bg-gradient-to-t from-transparent to-white to-50% absolute top-2/4 -translate-y-2/4 left-3 group-hover:top-0  group-hover:text-sm group-focus-within:text-sm group-focus-within:top-0 duration-500'} >{children}</label>
             <input 
             name={name} 
             required={required} 
