@@ -40,15 +40,14 @@ const Friends = () => {
       <Panel>
 
         {data !== undefined 
-        ? <Header total={data?.total}/>
-        : <HeaderPanelLoader/>}
-        
-        {data &&
-          data?.data.length > 0
-            ? <>{data?.data?.slice(0,9).map(item => <Content key={item.id} data={item}/>)}</>
-            : ''
+          ? <Header total={data?.total}/>
+          : <HeaderPanelLoader/>
         }
         
+        {data &&
+          data?.data.length  &&
+            <>{data?.data?.slice(0,9).map(item => <Content key={item.id} data={item}/>)}</>
+        }
       </Panel>
     </>
   ) 

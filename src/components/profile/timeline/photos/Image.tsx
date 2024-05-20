@@ -12,7 +12,7 @@ const Image = ({data}:PropsImage) => {
 
     return(
         <li className={`col-span-1 border-[3px] border-gray-300 min-h-[140px] max-h-[140px] p-1`}>
-            <img className={`w-full h-full ${!isLoaded && 'hidden'}`} src={data?.url} alt="" onLoad={handleImageLoad}/>
+            <img className={`w-full h-full aspect-[16/9] ${!isLoaded && 'hidden'}`} src={data?.url} alt="" onLoad={handleImageLoad}/>
             {
                 !isLoaded  && <ImageLoader/>
             }
