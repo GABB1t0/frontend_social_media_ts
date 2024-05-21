@@ -46,18 +46,12 @@ export const PostModal: React.FC<props> = () => {
     const arr = [...sust]
 
     const formData = new FormData(e.currentTarget);
-    if(images.length > 0){
+      console.log(images)
+    
       images.forEach((file)=>{
         formData.append("images[]", file)
       })
-    }else{
-
-      arr.forEach((file)=>{
-        formData.append("images[]", file)
-      }
-      )
-
-    }
+    
     
     console.log(formData.get("images"));
 
@@ -81,15 +75,18 @@ export const PostModal: React.FC<props> = () => {
     if(!e.target.files) return
     const sust = e.target.files[Symbol.iterator](); 
     const arr = [...sust]
+    setImages([...images,...arr])
     console.log(arr);
     const arr2 = arr.map(item => URL.createObjectURL(item))
-    console.log(arr2);
-    setFile(arr2);
+    
+    setFile([...file,...arr2]);
     
     
   }
 
   const handleDelete = (key: number, item:string) =>{
+
+    console.log(key, item)
     
     const newFile = file.filter(item2 => item2 !== item)
     setFile(newFile)
@@ -99,8 +96,9 @@ export const PostModal: React.FC<props> = () => {
     console.log(inputImgRef.current.files);
     const sust = inputImgRef.current.files[Symbol.iterator](); 
     const arr = [...sust]
-    arr.splice(key, 1)
-    setImages(arr)
+    images.splice(key, 1)
+    
+    setImages([...images])
     
   }
 
