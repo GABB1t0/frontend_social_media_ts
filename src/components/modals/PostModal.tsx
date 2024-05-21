@@ -91,11 +91,7 @@ export const PostModal: React.FC<props> = () => {
     const newFile = file.filter(item2 => item2 !== item)
     setFile(newFile)
     
-    if(!inputImgRef.current || !inputImgRef.current.files) return
-    /* inputImgRef.current.files.splice(key, 1); */
-    console.log(inputImgRef.current.files);
-    const sust = inputImgRef.current.files[Symbol.iterator](); 
-    const arr = [...sust]
+    
     images.splice(key, 1)
     
     setImages([...images])
